@@ -1,0 +1,33 @@
+{% extends 'index.html' %}
+
+{% block game %}
+    <div class="game">
+        <div class="legend" style="text-align: center;">
+            <p>
+                Вы вчера хорошо покутили в компании барона Мюнхгаузена!
+                Но теперь он куда-то пропал, а вы проснулись в винном погребе.
+            </p>
+            <p>
+                Хорошо бы выбраться на свежий воздух... Вам нужно найти балкон!
+            </p>
+        </div>
+        <div class="gameplay" style="text-align: center;">
+            <form action="" method="post">
+                {% if form.field != ('csrf_token', 'submit') %}
+                    <p>{{ form.way.label }} {{ form.way }}</p>
+                    <p>{{ form.steps.label }} {{ form.steps }}</p>
+                    <p>{{ form.submit }}</p>
+                {% endif %}
+                {% if form.steps.data is not none %}
+                    {% for position in positions %}
+                        <p>{{ position }}</p>
+                    {% endfor %}
+                    <p>{{ castle.floor, castle.room }}</p>
+                    <p>{{ castle.pos() }}</p>
+                {% endif %}
+            </form>
+                
+
+        </div>
+    </div>
+{% endblock %}
