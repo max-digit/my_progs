@@ -1,5 +1,4 @@
-from logging import warning
-from threading import Lock
+# from threading import Lock
 from flask_wtf import FlaskForm
 from wtforms import IntegerField, SelectField, SubmitField
 from wtforms.validators import InputRequired, NumberRange
@@ -37,7 +36,7 @@ class GameForm(FlaskForm):
         "Сколько шагов вы хотите пройти?",
         validators = [
             InputRequired(message='Введите количество шагов'),
-            NumberRange(min=1, max=2, message="Вы не можете сюда двигаться")
+            NumberRange(min=0, max=2, message="Вы не можете сюда двигаться")
             ]
     )
 
@@ -70,12 +69,13 @@ class Castle(metaclass=SingletonMeta):
         if steps > 0:
             for _step in range(1, steps + 1):
                 if way == 0:
-                    if self.floor < self.edge:
+                    if self.floor <= self.edge:
                         self.floor += 1
                         if self.pos():
                             pass
                         else:
                             self.floor -= 1
+                            return self.warning
                     else:
                         break
                 elif way == 1:
@@ -108,19 +108,20 @@ class Castle(metaclass=SingletonMeta):
                 # self.pos()
         elif steps == 0:
             pass
-        return self.message()
+        yield self.message()
 
     def pos(self):
         return self.map[self.floor][self.room]
 
     def message(self):
         if self.pos():
-            if 0 >= self.floor >= (self.edge - 1) or \
-                0 >= self.room >= self.edge:
-                return self.warning
             if self.pos() == self.finish:
                 return self.congratulation
+            elif 0 >= self.floor >= self.edge or \
+                0 >= self.room >= self.edge:
+                    return self.warning
             else:
                 return f'Вы находитесь в комнате {self.pos()}. '
+            
         else:
             return self.warning

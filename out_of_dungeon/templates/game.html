@@ -14,17 +14,18 @@
         <div class="gameplay" style="text-align: center;">
             <form action="" method="post">
                 {% if form.field != ('csrf_token', 'submit') %}
-                    <p>{{ form.way.label }} {{ form.way }}</p>
-                    <p>{{ form.steps.label }} {{ form.steps }}</p>
+                    <p>{{ way.label }} {{ way }}</p>
+                    <p>{{ steps.label }} {{ steps }}</p>
                     <p>{{ form.submit }}</p>
                 {% endif %}
-                {% if form.steps.data is not none %}
+            </form>
+            {% if steps.data is not none %}
+                {% for position in positions %}
                     <p>{{ position }}</p>
                     <p>{{ castle.floor, castle.room }}</p>
                     <p>{{ castle.pos() }}</p>
-                {% endif %}
-            </form>
-                
+                {% endfor %}
+            {% endif %}
 
         </div>
     </div>

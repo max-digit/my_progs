@@ -16,20 +16,24 @@ def index():
 def game():
     form = GameForm()
     castle = Castle()
+    way = form.way
+    steps = form.steps
     if request.method == 'GET':
         return render_template(
             'game.html',
             form = form,
+            way = way,
+            steps = steps,
             # castle = castle,
         )
     elif request.method == 'POST':
-        way = form.way.data
-        steps = form.steps.data
         return render_template(
             'game.html',
             form = form,
+            way = way,
+            steps = steps,
             castle = castle,
-            position = castle.walk(way, steps)
+            positions = castle.walk(way.data, steps.data)
         )
 
 
