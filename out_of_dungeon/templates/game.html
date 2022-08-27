@@ -19,9 +19,7 @@
                     <p>{{ form.submit }}</p>
                 {% endif %}
                 {% if form.steps.data is not none %}
-                    {% for position in positions %}
-                        <p>{{ position }}</p>
-                    {% endfor %}
+                    <p>{{ position }}</p>
                     <p>{{ castle.floor, castle.room }}</p>
                     <p>{{ castle.pos() }}</p>
                 {% endif %}

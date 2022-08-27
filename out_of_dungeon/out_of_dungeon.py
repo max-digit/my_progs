@@ -1,3 +1,4 @@
+from logging import warning
 from threading import Lock
 from flask_wtf import FlaskForm
 from wtforms import IntegerField, SelectField, SubmitField
@@ -6,13 +7,13 @@ from wtforms.validators import InputRequired, NumberRange
 
 class SingletonMeta(type):
     _instances = {}
-    _lock: Lock = Lock()
+    # _lock: Lock = Lock()
 
     def __call__(cls, *args, **kwargs):
-        with cls._lock:
-            if cls not in cls._instances or args or kwargs:
-                instance = super().__call__(*args, **kwargs)
-                cls._instances[cls] = instance
+        # with cls._lock:
+        if cls not in cls._instances or args or kwargs:
+            instance = super().__call__(*args, **kwargs)
+            cls._instances[cls] = instance
         return cls._instances[cls]
 
 
@@ -69,56 +70,54 @@ class Castle(metaclass=SingletonMeta):
         if steps > 0:
             for _step in range(1, steps + 1):
                 if way == 0:
-                    if self.floor < self.edge - 1 or (self.floor, self.room) == (1, 1):
+                    if self.floor < self.edge:
                         self.floor += 1
-                        yield self.message()
+                        if self.pos():
+                            pass
+                        else:
+                            self.floor -= 1
                     else:
-                        yield self.warning
                         break
                 elif way == 1:
                     if self.room < self.edge:
                         self.room += 1
                         if self.pos():
-                            yield self.message()
+                            pass
                         else:
                             self.room -= 1
-                            yield self.message()
                     else:
-                        yield self.warning
                         break
                 elif way == 2:
                     if self.floor > 0:
                         self.floor -= 1
-                        yield self.message()
+                        if self.pos():
+                            pass
+                        else:
+                            self.floor += 1
                     else:
-                        yield self.warning
                         break
                 elif way == 3:
                     if self.room > 0:
                         self.room -= 1
                         if self.pos():
-                            yield self.message()
+                            pass
                         else:
                             self.room += 1
-                            yield self.message()
                     else:
-                        yield self.warning
                         break
                 # self.pos()
-                # self.message()
         elif steps == 0:
-            yield self.message()
+            pass
+        return self.message()
 
     def pos(self):
-        position = self.map[self.floor][self.room]
-        if position:
-            return position
-        else:
-            pass
-
+        return self.map[self.floor][self.room]
 
     def message(self):
         if self.pos():
+            if 0 >= self.floor >= (self.edge - 1) or \
+                0 >= self.room >= self.edge:
+                return self.warning
             if self.pos() == self.finish:
                 return self.congratulation
             else:

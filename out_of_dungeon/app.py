@@ -29,7 +29,7 @@ def game():
             'game.html',
             form = form,
             castle = castle,
-            positions = castle.walk(way, steps)
+            position = castle.walk(way, steps)
         )
 
 
