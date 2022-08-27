@@ -56,7 +56,7 @@ class Castle(metaclass=SingletonMeta):
         self.start = self.map[0][0]
         self.finish = self.map[2][1]
         self.warning = "Вы упёрлись в стену"
-        self.congratulation = f"Отлично! Вы выбрались на {self.finish}! Свежий воздух бодрит, а барон Мюнхгаузен приветствует вас!"
+        self.congratulation = f"Отлично! Вы выбрались на {self.finish}! Свежий воздух бодрит, а барон Мюнхгаузен приветствует вас вкуснейшим завтраком!"
 
     def castle_build(self):
         return [
@@ -69,59 +69,50 @@ class Castle(metaclass=SingletonMeta):
         if steps > 0:
             for _step in range(1, steps + 1):
                 if way == 0:
-                    if self.floor <= self.edge:
+                    if self.floor < self.edge:
                         self.floor += 1
                         if self.pos():
-                            pass
+                            yield self.message()
                         else:
                             self.floor -= 1
-                            return self.warning
+                            yield self.message()
+                            yield self.warning
+                            break
                     else:
+                        yield self.message()
+                        yield self.warning
                         break
                 elif way == 1:
                     if self.room < self.edge:
                         self.room += 1
-                        if self.pos():
-                            pass
-                        else:
-                            self.room -= 1
+                        yield self.message()
                     else:
+                        yield self.message()
+                        yield self.warning
                         break
                 elif way == 2:
                     if self.floor > 0:
                         self.floor -= 1
-                        if self.pos():
-                            pass
-                        else:
-                            self.floor += 1
+                        yield self.message()
                     else:
+                        yield self.message()
+                        yield self.warning
                         break
                 elif way == 3:
                     if self.room > 0:
                         self.room -= 1
-                        if self.pos():
-                            pass
-                        else:
-                            self.room += 1
+                        yield self.message()
                     else:
+                        yield self.message()
+                        yield self.warning
                         break
-                # self.pos()
         elif steps == 0:
-            pass
-        yield self.message()
+            yield self.message()
 
     def pos(self):
         return self.map[self.floor][self.room]
 
     def message(self):
-        if self.pos():
-            if self.pos() == self.finish:
-                return self.congratulation
-            elif 0 >= self.floor >= self.edge or \
-                0 >= self.room >= self.edge:
-                    return self.warning
-            else:
-                return f'Вы находитесь в комнате {self.pos()}. '
-            
-        else:
-            return self.warning
+        if self.pos() == self.finish:
+            return self.congratulation
+        return f'Вы находитесь в комнате {self.pos()}. '

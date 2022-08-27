@@ -23,8 +23,8 @@
                 {% for position in positions %}
                     <p>{{ position }}</p>
                     <p>{{ castle.floor, castle.room }}</p>
-                    <p>{{ castle.pos() }}</p>
                 {% endfor %}
+                <p>{{ castle.pos() }}</p>
             {% endif %}
 
         </div>
