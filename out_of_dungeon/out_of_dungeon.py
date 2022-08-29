@@ -52,13 +52,16 @@ class SingletonMeta(type):
 
 class Player:
 
-    def __init__(self, name) -> None:
-        self.name = name
+    @classmethod
+    def __init__(cls, name) -> None:
+        cls.name = name
 
 
 class Castle(Player, metaclass=SingletonMeta):
 
     def __init__(self, floor=0, room=0, ) -> None:
+        if hasattr(Player, 'name'):
+            self.name = Player.name
         self.map = self.castle_build()
         self.size = len(self.map)
         self.edge = self.size - 1
@@ -66,7 +69,6 @@ class Castle(Player, metaclass=SingletonMeta):
         self.room = room
         self.start = self.map[0][0]
         self.finish = self.map[2][1]
-        # self.name = name
         self.warning = ["Вы упёрлись в стену"]
 
     def castle_build(self):

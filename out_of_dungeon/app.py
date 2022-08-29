@@ -18,8 +18,8 @@ def game():
     form = GameForm()
     way = form.way
     steps = form.steps
-    name = form.name.data
-    Player(name)
+    name = form.name
+    Player.name = name.data
     castle = Castle()
     if request.method == 'POST':
         return render_template(

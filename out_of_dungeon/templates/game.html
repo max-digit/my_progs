@@ -11,7 +11,7 @@
                 Хорошо бы выбраться на свежий воздух... Вам нужно найти балкон!
             </p>
         </div>
-        <div class="gameplay" style="text-align: center;">
+        <div class="gameplay">
             <form action="" method="post">
                 {% for field in form if field.name not in ('csrf_token', 'submit') %}
                     <p>{{ field.label }} {{ field }}</p>
