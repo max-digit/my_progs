@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template
 
-from out_of_dungeon import GameForm, Castle
+from out_of_dungeon import GameForm, Player, Castle
 from config import Config
 
 app = Flask(__name__)
@@ -9,31 +9,32 @@ app.config.from_object(Config())
 
 @app.route('/')
 def index():
+    Castle(floor=0, room=0)
     return render_template('index.html')
 
 
 @app.route('/game/', methods=['GET','POST'])
 def game():
     form = GameForm()
-    castle = Castle()
     way = form.way
     steps = form.steps
-    if request.method == 'GET':
-        return render_template(
-            'game.html',
-            form = form,
-            way = way,
-            steps = steps,
-            # castle = castle,
-        )
-    elif request.method == 'POST':
+    name = form.name.data
+    Player(name)
+    castle = Castle()
+    if request.method == 'POST':
         return render_template(
             'game.html',
             form = form,
             way = way,
             steps = steps,
             castle = castle,
-            positions = castle.walk(way.data, steps.data)
+        )
+    elif request.method == 'GET':
+        return render_template(
+        'game.html',
+        form = form,
+        way = way,
+        steps = steps,
         )
 
 

@@ -2,9 +2,9 @@
 
 {% block game %}
     <div class="game">
-        <div class="legend" style="text-align: center;">
+        <div class="legend">
             <p>
-                Вы вчера хорошо покутили в компании барона Мюнхгаузена!
+                Вы вчера хорошо покутили в замке барона Мюнхгаузена!
                 Но теперь он куда-то пропал, а вы проснулись в винном погребе.
             </p>
             <p>
@@ -13,18 +13,18 @@
         </div>
         <div class="gameplay" style="text-align: center;">
             <form action="" method="post">
-                {% if form.field != ('csrf_token', 'submit') %}
-                    <p>{{ way.label }} {{ way }}</p>
-                    <p>{{ steps.label }} {{ steps }}</p>
-                    <p>{{ form.submit }}</p>
-                {% endif %}
+                {% for field in form if field.name not in ('csrf_token', 'submit') %}
+                    <p>{{ field.label }} {{ field }}</p>
+                {% endfor %}
+                <p>{{ form.submit }}</p>
             </form>
             {% if steps.data is not none %}
-                {% for position in positions %}
-                    <p>{{ position }}</p>
-                    <p>{{ castle.floor, castle.room }}</p>
+                {% for positions in castle.walk(way.data, steps.data) %}
+                    {% for position in positions %}
+                        <p>{{ position }}</p>
+                    {% endfor %}
                 {% endfor %}
-                <p>{{ castle.pos() }}</p>
+                <p># {{ castle.pos() }}</p>
             {% endif %}
 
         </div>
