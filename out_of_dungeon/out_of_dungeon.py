@@ -1,14 +1,17 @@
 from threading import Lock
 from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, SelectField, SubmitField
-from wtforms.validators import InputRequired, NumberRange
+from wtforms.validators import InputRequired, DataRequired, NumberRange
 
 
 class GameForm(FlaskForm):
     
     name = StringField(
-        "Назовите Ваше имя: ",
-        validators=[InputRequired(), NumberRange(33)]
+        "Если готовы, назовите Ваше имя: ",
+        validators=[
+            DataRequired(message=''),
+            InputRequired(message='Введите своё имя'),
+            NumberRange(33)]
     )
 
     way = SelectField(
@@ -61,7 +64,7 @@ class Castle(Player, metaclass=SingletonMeta):
 
     def __init__(self, floor=0, room=0, ) -> None:
         if hasattr(Player, 'name'):
-            self.name = Player.name
+            self.name = getattr(Player, 'name')
         self.map = self.castle_build()
         self.size = len(self.map)
         self.edge = self.size - 1

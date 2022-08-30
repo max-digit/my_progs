@@ -9,11 +9,12 @@
     {% block game %}
         <div style="position: relative; background-color: lightgray; margin-right: auto; margin-left: auto; text-align: center; height: 100px; width: auto; border-radius: 20px;">
             <p style="padding-top: 1rem;">Готовы отправиться к приключениям?</p>
-            <div class="button" style="display: block; margin-top: 10px; ">
-                <button class="btn btn-info">
-                    <a href="{{ url_for('game') }}" style="color:whitesmoke; text-decoration: none;">Начать путешествие</a>
-                </button>
-            </div>
+            <form method="post" action="">
+                <p>{{ form.name.label }} {{ form.name }}</p>
+                <a href="{{ url_for('game') }}" style="color:black; text-decoration: none;">
+                    <input type="submit" value="Начать путешествие!" class="btn btn-info">
+                </a>
+            </form>
         </div>
     {% endblock %}
 {% endblock %}

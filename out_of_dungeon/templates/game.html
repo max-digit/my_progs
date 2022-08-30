@@ -13,20 +13,25 @@
         </div>
         <div class="gameplay">
             <form action="" method="post">
-                {% for field in form if field.name not in ('csrf_token', 'submit') %}
-                    <p>{{ field.label }} {{ field }}</p>
-                {% endfor %}
+                {% if form.field not in ('csrf_token', 'submit') %}
+                    <p>{{ form.way.label }} {{ form.way }}</p>
+                    <p>{{ form.steps.label }} {{ form.steps }}</p>
+                {% endif %}
                 <p>{{ form.submit }}</p>
             </form>
-            {% if steps.data is not none %}
-                {% for positions in castle.walk(way.data, steps.data) %}
-                    {% for position in positions %}
-                        <p>{{ position }}</p>
-                    {% endfor %}
-                {% endfor %}
-                <p># {{ castle.pos() }}</p>
-            {% endif %}
-
         </div>
+            <div class="messages">
+                {% if castle %}
+                    {% if form.steps.data is not none %}
+                        {% for positions in castle.walk(form.way.data, form.steps.data) %}
+                            {% for position in positions %}
+                                <div class="position">
+                                    {{ position }}
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                    {% endif %}
+                {% endif %}
+            </div>
     </div>
 {% endblock %}
