@@ -10,7 +10,7 @@ class GameForm(FlaskForm):
         "Если готовы, назовите Ваше имя: ",
         validators=[
             InputRequired(message='Введите своё имя'),
-            Length(max=33, message=f'Выберите имя короче {max} символов')]
+            Length(max=33, message=f'Выберите имя покороче')]
     )
 
     way = SelectField(
@@ -64,6 +64,8 @@ class Castle(Player, metaclass=SingletonMeta):
     def __init__(self, floor=0, room=0, ) -> None:
         if hasattr(Player, 'name'):
             self.name = getattr(Player, 'name')
+        else:
+            self.name = 'Сэр'
         self.map = self.castle_build()
         self.size = len(self.map)
         self.edge = self.size - 1

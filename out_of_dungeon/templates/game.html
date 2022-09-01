@@ -2,16 +2,16 @@
 
 {% block game %}
     <div class="game">
-        <div class="legend">
+        <div class="legend game_block">
             <p>
-                {{ Player.name }}, вы вчера хорошо покутили в замке барона Мюнхгаузена!
+                {{ Player.name }}, вы вчера хорошо покутили в замке барона Мюнхгаузена!<br>
                 Но теперь он куда-то пропал, а вы проснулись... в винном погребе.
             </p>
             <p>
-                Хорошо бы выбраться на свежий воздух... Вам нужно найти балкон!
+                Хорошо бы выбраться на свежий воздух...<br> Вам нужно найти балкон!
             </p>
         </div>
-        <div class="gameplay">
+        <div class="gameplay game_block">
             <form action="" method="post">
                 {% if form.field not in ('csrf_token', 'submit') %}
                     <p>{{ form.way.label }} {{ form.way }}</p>

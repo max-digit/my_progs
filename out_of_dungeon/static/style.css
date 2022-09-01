@@ -1,29 +1,56 @@
-.legend, .gameplay{
-    margin-left: auto;
-    margin-right: auto;
-    border: 3px solid orange;
-    border-radius: 1em;
-    padding: 10px;
-    text-align: center;
-    height: fit-content;
-    width: fit-content;
-    background-color: lightblue;
-    font-weight: 600;
+body {
+    background-image: url('./images/background.jpg');
+    background-size: cover;
+}
+
+.content {
     font-family:Comic Sans MS;
 }
 
+.game_block {
+    height: fit-content;
+    width: 30%;
+    border: 1px solid;
+}
+
+.start {
+    background-color: lightgray;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 1em;
+    text-align: center;
+    border-radius: 20px;
+    border-color: darkgray;
+}
+
+.game {
+    display: flex;
+    justify-content: space-between;
+    margin: 5rem;
+}
+
+
+.legend {
+    border-color:orange;
+    border-radius: 1em;
+    padding: 10px;
+    text-align: justify;
+    background-color: lightblue;
+    font-weight: 600;
+}
+
 .gameplay {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    background-color: limegreen;
-    border: 1px solid green;
+    padding: 10px;
+    border-color: green;
+    border-radius: 1em;
+    background-color: #89d389;
     text-align: center;
     font-weight: 100;
 }
 
 .position {
     height: auto;
-    width: 500px;
+    width: fit-content;
     text-align: center;
     margin-left: auto;
     margin-right: auto;
@@ -32,8 +59,7 @@
     padding: 10px;
     border-radius: 10px;
     border:1px solid green;
-    background-color:chartreuse;
-    font-family: inherit;
+    background-color:#aaff56;
 
 }
 
