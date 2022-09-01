@@ -11,7 +11,7 @@
             <p style="padding-top: 1rem;">Готовы отправиться к приключениям?</p>
             <form method="post" action="">
                 <p>{{ form.name.label }} {{ form.name }}</p>
-                <a href="{{ url_for('game') }}" style="color:black; text-decoration: none;">
+                <a href="{{ url_for('game', name=name) }}" style="color:black; text-decoration: none;">
                     <input type="submit" value="Начать путешествие!" class="btn btn-info">
                 </a>
             </form>

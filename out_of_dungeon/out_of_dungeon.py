@@ -1,7 +1,7 @@
 from threading import Lock
 from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, SelectField, SubmitField
-from wtforms.validators import InputRequired, DataRequired, NumberRange
+from wtforms.validators import InputRequired, Length, NumberRange
 
 
 class GameForm(FlaskForm):
@@ -9,9 +9,8 @@ class GameForm(FlaskForm):
     name = StringField(
         "Если готовы, назовите Ваше имя: ",
         validators=[
-            DataRequired(message=''),
             InputRequired(message='Введите своё имя'),
-            NumberRange(33)]
+            Length(max=33, message=f'Выберите имя короче {max} символов')]
     )
 
     way = SelectField(
@@ -72,80 +71,87 @@ class Castle(Player, metaclass=SingletonMeta):
         self.room = room
         self.start = self.map[0][0]
         self.finish = self.map[2][1]
-        self.warning = ["Вы упёрлись в стену"]
 
     def castle_build(self):
         return [
-            ["Подземелье", "Коридор", "Оружейная"],
+            ["Погреб", "Коридор", "Оружейная"],
             ["Спальня", "Холл", "Кухня"],
             ["", "Балкон", ""],
             ]
 
-    def walk(self, way, steps,):
-        if steps > 0:
-            for _step in range(1, steps + 1):
-                if way == 0:
-                    if self.floor < self.edge:
-                        self.floor += 1
-                        if self.pos():
-                            yield self.get_messages()
-                        else:
-                            self.floor -= 1
-                            yield self.warning
-                            break
-                    else:
-                        yield self.warning
-                        break
-                elif way == 1:
-                    if self.room < self.edge:
-                        self.room += 1
-                        if self.pos():
-                            yield self.get_messages()
-                        else:
-                            self.room -= 1
-                            yield self.warning
-                            break
-                    else:
-                        yield self.warning
-                        break
-                elif way == 2:
-                    if self.floor > 0:
-                        self.floor -= 1
-                        if self.pos():
-                            yield self.get_messages()
-                        else:
-                            self.floor += 1
-                            yield self.warning
-                            break
-                    else:
-                        yield self.warning
-                        break
-                elif way == 3:
-                    if self.room > 0:
-                        self.room -= 1
-                        if self.pos():
-                            yield self.get_messages()
-                        else:
-                            self.room += 1
-                            yield self.warning
-                            break
-                    else:
-                        yield self.warning
-                        break
-                if self.pos() == self.finish:
-                    # yield self.get_messages()
-                    break
-        elif steps == 0:
-            yield self.get_messages()
+    def move(self, way, steps):
+        if way is not None and steps is not None:
+            if way in range(4):
+                if steps > 0:
+                    for _step in range(1, steps + 1):
+                        if way == 0:
+                            if self.floor < self.edge:
+                                self.floor += 1
+                                if self.pos():
+                                    yield self.get_message()
+                                else:
+                                    self.floor -= 1
+                                    yield self.get_notice()
+                                    break
+                            else:
+                                yield self.get_notice()
+                                break
+                        elif way == 1:
+                            if self.room < self.edge:
+                                self.room += 1
+                                if self.pos():
+                                    yield self.get_message()
+                                else:
+                                    self.room -= 1
+                                    yield self.get_notice()
+                                    break
+                            else:
+                                yield self.get_notice()
+                                break
+                        elif way == 2:
+                            if self.floor > 0:
+                                self.floor -= 1
+                                if self.pos():
+                                    yield self.get_message()
+                                else:
+                                    self.floor += 1
+                                    yield self.get_notice()
+                                    break
+                            else:
+                                yield self.get_notice()
+                                break
+                        elif way == 3:
+                            if self.room > 0:
+                                self.room -= 1
+                                if self.pos():
+                                    yield self.get_message()
+                                else:
+                                    self.room += 1
+                                    yield self.get_notice()
+                                    break
+                            else:
+                                yield self.get_notice()
+                                break
+                        if self.pos() == self.finish:
+                            yield self.get_congratulation()
+                elif steps == 0:
+                    yield self.get_message()
+            elif way not in range(4):
+                yield self.get_warning(way)
+        elif way is None or steps is None:
+            yield self.get_message()
 
     def pos(self):
         return self.map[self.floor][self.room]
 
-    def get_messages(self):
-        message = f"Вы находитесь в комнате {self.pos()}"
-        congratulation = f"Отлично, {self.name}! Вы выбрались на {self.finish}! Свежий воздух бодрит, а барон Мюнхгаузен приветствует вас вкуснейшим завтраком!"
-        if self.pos() == self.finish:
-            return [message, congratulation]
+    def get_message(self):
+        return f"Вы в комнате {self.pos()}"
 
-        else:
-            return [message]
+    def get_notice(self):
+        return f"Вы упёрлись в стену комнаты {self.pos()}"
+    
+    def get_warning(self, way):
+        return f'Такой стороны света ({way}) не существует. Проверьте введенные данные'
+
+    def get_congratulation(self):
+        return f"Отлично, {self.name}! Вы выбрались на {self.finish}! Свежий воздух бодрит, а барон Мюнхгаузен приветствует вас вкуснейшим завтраком!"

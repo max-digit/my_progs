@@ -4,8 +4,8 @@
     <div class="game">
         <div class="legend">
             <p>
-                Вы вчера хорошо покутили в замке барона Мюнхгаузена!
-                Но теперь он куда-то пропал, а вы проснулись в винном погребе.
+                {{ Player.name }}, вы вчера хорошо покутили в замке барона Мюнхгаузена!
+                Но теперь он куда-то пропал, а вы проснулись... в винном погребе.
             </p>
             <p>
                 Хорошо бы выбраться на свежий воздух... Вам нужно найти балкон!
@@ -19,19 +19,15 @@
                 {% endif %}
                 <p>{{ form.submit }}</p>
             </form>
-        </div>
             <div class="messages">
                 {% if castle %}
-                    {% if form.steps.data is not none %}
-                        {% for positions in castle.walk(form.way.data, form.steps.data) %}
-                            {% for position in positions %}
-                                <div class="position">
-                                    {{ position }}
-                                </div>
-                            {% endfor %}
-                        {% endfor %}
-                    {% endif %}
+                    {% for position in walk %}
+                        <div class="position">
+                            {{ position }}
+                        </div>
+                    {% endfor %}
                 {% endif %}
             </div>
+        </div>
     </div>
 {% endblock %}

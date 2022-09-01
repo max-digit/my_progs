@@ -1,21 +1,24 @@
 .legend, .gameplay{
     margin-left: auto;
     margin-right: auto;
-    border: 1px solid lightseagreen;
-    border-radius: 10px;
+    border: 3px solid orange;
+    border-radius: 1em;
     padding: 10px;
     text-align: center;
     height: fit-content;
     width: fit-content;
     background-color: lightblue;
+    font-weight: 600;
+    font-family:Comic Sans MS;
 }
 
 .gameplay {
     margin-top: 2rem;
     margin-bottom: 2rem;
-    background-color: lightgreen;
-    border: 1px solid seagreen;
+    background-color: limegreen;
+    border: 1px solid green;
     text-align: center;
+    font-weight: 100;
 }
 
 .position {
@@ -30,7 +33,7 @@
     border-radius: 10px;
     border:1px solid green;
     background-color:chartreuse;
-
+    font-family: inherit;
 
 }
 
