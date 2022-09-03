@@ -14,20 +14,21 @@
         <div class="gameplay game_block">
             <form action="" method="post">
                 {% if form.field not in ('csrf_token', 'submit') %}
-                    <p>{{ form.way.label }} {{ form.way }}</p>
+                    <p>{{ form.way.label }}</p>
+                    <div class="way">
+                        <p>{{ form.way }}</p>
+                    </div>
                     <p>{{ form.steps.label }} {{ form.steps }}</p>
                 {% endif %}
                 <p>{{ form.submit }}</p>
             </form>
-            <div class="messages">
-                {% if castle %}
-                    {% for position in walk %}
-                        <div class="position">
-                            {{ position }}
-                        </div>
-                    {% endfor %}
-                {% endif %}
-            </div>
+            {% if castle %}
+                {% for position in walk %}
+                    <div class="position">
+                        {{ position }}
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 {% endblock %}
