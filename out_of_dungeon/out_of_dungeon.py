@@ -136,6 +136,7 @@ class Castle(Player, metaclass=SingletonMeta):
                                 break
                         if self.pos() == self.finish:
                             yield self.get_congratulation()
+                            break
                 elif steps == 0:
                     yield self.get_message()
             elif way not in range(4):
