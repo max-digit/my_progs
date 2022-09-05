@@ -10,12 +10,18 @@ app.config.from_object(Config())
 @app.route('/', methods=['GET', 'POST'])
 def index():
     form = GameForm()
-    name = form.name
-    Player.name = name.data
+    Player.name = form.name.data
     Castle(floor=0, room=0)
     if request.method == 'POST':
         if form.validate_on_submit:
-            return redirect(url_for('game', name=Player.name, way=None, steps=None))
+            return redirect(
+                url_for(
+                    'game',
+                    name=Player.name,
+                    way=None,
+                    steps=None
+                    )
+                )
     return render_template(
         'index.html',
         form = form

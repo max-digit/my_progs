@@ -1,6 +1,7 @@
 from threading import Lock
+
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, SelectField, SubmitField
+from wtforms import IntegerField, SelectField, StringField, SubmitField
 from wtforms.validators import InputRequired, Length, NumberRange
 
 
@@ -85,58 +86,14 @@ class Castle(Player, metaclass=SingletonMeta):
         if way is not None and steps is not None:
             if way in range(4):
                 if steps > 0:
-                    for _step in range(1, steps + 1):
-                        if way == 0:
-                            if self.floor < self.edge:
-                                self.floor += 1
-                                if self.pos():
-                                    yield self.get_message()
-                                else:
-                                    self.floor -= 1
-                                    yield self.get_notice()
-                                    break
-                            else:
-                                yield self.get_notice()
-                                break
-                        elif way == 1:
-                            if self.room < self.edge:
-                                self.room += 1
-                                if self.pos():
-                                    yield self.get_message()
-                                else:
-                                    self.room -= 1
-                                    yield self.get_notice()
-                                    break
-                            else:
-                                yield self.get_notice()
-                                break
-                        elif way == 2:
-                            if self.floor > 0:
-                                self.floor -= 1
-                                if self.pos():
-                                    yield self.get_message()
-                                else:
-                                    self.floor += 1
-                                    yield self.get_notice()
-                                    break
-                            else:
-                                yield self.get_notice()
-                                break
-                        elif way == 3:
-                            if self.room > 0:
-                                self.room -= 1
-                                if self.pos():
-                                    yield self.get_message()
-                                else:
-                                    self.room += 1
-                                    yield self.get_notice()
-                                    break
-                            else:
-                                yield self.get_notice()
-                                break
-                        if self.pos() == self.finish:
-                            yield self.get_congratulation()
-                            break
+                    if way == 0:
+                        yield from self.walk_north(steps)
+                    elif way == 1:
+                        yield from self.walk_east(steps)
+                    elif way == 2:
+                        yield from self.walk_south(steps)
+                    elif way == 3:
+                        yield from self.walk_west(steps)
                 elif steps == 0:
                     yield self.get_message()
             elif way not in range(4):
@@ -144,17 +101,85 @@ class Castle(Player, metaclass=SingletonMeta):
         elif way is None or steps is None:
             yield self.get_message()
 
+    def walk_north(self, steps):
+        for _step in range(1, steps + 1):
+            if self.floor < self.edge:
+                self.floor += 1
+                if self.pos():
+                    yield self.get_message()
+                else:
+                    self.floor -= 1
+                    yield self.get_notice()
+                    break
+            else:
+                yield self.get_notice()
+                break
+            if self.pos() == self.finish:
+                yield self.get_congratulation()
+                break
+
+    def walk_east(self, steps):
+        for _step in range(1, steps + 1):
+            if self.room < self.edge:
+                self.room += 1
+                if self.pos():
+                    yield self.get_message()
+                else:
+                    self.room -= 1
+                    yield self.get_notice()
+                    break
+            else:
+                yield self.get_notice()
+                break
+            if self.pos() == self.finish:
+                yield self.get_congratulation()
+                break
+
+    def walk_south(self, steps):
+        for _step in range(1, steps + 1):
+            if self.floor > 0:
+                self.floor -= 1
+                if self.pos():
+                    yield self.get_message()
+                else:
+                    self.floor += 1
+                    yield self.get_notice()
+                    break
+            else:
+                yield self.get_notice()
+                break
+            if self.pos() == self.finish:
+                yield self.get_congratulation()
+                break
+
+    def walk_west(self, steps):
+        for _step in range(1, steps + 1):
+            if self.room > 0:
+                self.room -= 1
+                if self.pos():
+                    yield self.get_message()
+                else:
+                    self.room += 1
+                    yield self.get_notice()
+                    break
+            else:
+                yield self.get_notice()
+                break
+            if self.pos() == self.finish:
+                yield self.get_congratulation()
+                break
+
     def pos(self):
         return self.map[self.floor][self.room]
 
     def get_message(self):
-        return f"Вы в комнате {self.pos()}"
+        return f'Вы в комнате {self.pos()}'
 
     def get_notice(self):
-        return f"Вы упёрлись в стену комнаты {self.pos()}"
+        return f'Вы упёрлись в стену комнаты {self.pos()}'
     
     def get_warning(self, way):
         return f'Такой стороны света ({way}) не существует. Проверьте введенные данные'
 
     def get_congratulation(self):
-        return f"Отлично, {self.name}! Вы выбрались на {self.finish}! Свежий воздух бодрит, а барон Мюнхгаузен приветствует вас вкуснейшим завтраком! (Утка. С яблоками)"
+        return f'Отлично, {self.name}! Вы выбрались на {self.finish}! Свежий воздух бодрит, а барон Мюнхгаузен приветствует вас вкуснейшим завтраком!'

@@ -3,8 +3,24 @@ body {
     background-size: cover;
 }
 
+.home {
+    text-align:center;
+    margin-left:auto;
+    margin-right:auto;
+    color: darkcyan;
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
 .content {
     font-family:Comic Sans MS;
+}
+
+.game {
+    display: flex;
+    justify-content: space-between;
+    margin: 5rem;
+    margin-top: 5px;
 }
 
 .game_block {
@@ -13,78 +29,58 @@ body {
     border: 5px ridge;
 }
 
-.start {
-    background-color: lightblue;
-    margin-right: auto;
-    margin-left: auto;
-    padding: 1em;
+.gameplay, .start {
+    padding: 20px;
+    border-color: SaddleBrown;
+    border-radius: 1em;
+    background-color: burlywood;
     text-align: center;
-    border-radius: 20px;
-    border: none;
 }
 
-.game {
-    display: flex;
-    justify-content: space-between;
-    margin: 5rem;
-}
 
+.start {
+    margin-left: auto;
+    margin-right: auto;
+}
 
 .legend {
     border: none;
+    border-radius: 1em;
     padding: 20px;
     text-align: justify;
     background-color: AntiqueWhite;
     font-weight: 600;
 }
 
-.gameplay {
-    padding: 20px;
-    border-color: SaddleBrown;
-    border-radius: 1em;
-    background-color: burlywood;
-    text-align: center;
-    font-weight: 100;
-}
-
-#way {
-    background-color: tan;
-    border: 2px outset saddlebrown;
-    border-radius: 5px;
-}
-
-
-#steps {
+#name, #steps, #way {
     background-color: AntiqueWhite;
-    border-color: saddlebrown;
-    border-radius: 5px;
-}
-
-
-#submit {
-    background-color: tan;
     border: 2px outset saddlebrown;
     border-radius: 5px;
 }
 
+#submit, #begin {
+    background-color: #5DADE2;
+    border: 2px outset saddlebrown;
+    border-radius: 5px;
+}
+
+#submit:active, #begin:active {
+    background-color: #2E86C1;
+    border-style: inset;
+}
 
 .position {
     height: auto;
     width: fit-content;
     text-align: center;
-    color: whitesmoke;
     margin-left: auto;
     margin-right: auto;
     margin-top: 20px;
     margin-bottom: 20px;
     padding: 10px;
     border-radius: 10px;
-    border: inherit;
-    border-width: 2px;
-    background-color:sienna;
+    border: 3px ridge saddlebrown;
+    background-color:antiquewhite;
 
 }
 
-.btn-info:hover {
-    background-color: orange;
-}
