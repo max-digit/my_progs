@@ -28,7 +28,7 @@ def index():
         )
 
 @app.route('/game/<string:name>/', methods=['GET','POST'])
-@app.route('/game/<string:name>/<int:way>/<int:steps>/', methods=['GET','POST'])
+@app.route('/game/<string:name>/<string:way>/<int:steps>/', methods=['GET','POST'])
 def game(name, way=None, steps=None):
     form = GameForm()
     Player.name = name

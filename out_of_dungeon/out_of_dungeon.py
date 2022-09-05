@@ -16,12 +16,12 @@ class GameForm(FlaskForm):
 
     way = SelectField(
         "Выберите сторону света, в которую хотите отправиться: ",
-        coerce = int,
+        coerce = str,
         choices = [
-            (0, "Север"),
-            (1, "Восток"),
-            (2, "Юг"),
-            (3, "Запад")
+            ("вперёд", "Вперёд"),
+            ("направо", "Направо"),
+            ("назад", "Назад"),
+            ("налево", "Налево")
         ],
         render_kw = {
             'class':'form_control',
@@ -82,21 +82,22 @@ class Castle(Player, metaclass=SingletonMeta):
             ["", "Балкон", ""],
             ]
 
-    def move(self, way, steps):
+    def move(self, way: str, steps: int):
+        ways = ("вперёд", "направо", "назад", "налево")
         if way is not None and steps is not None:
-            if way in range(4):
+            if way in ways:
                 if steps > 0:
-                    if way == 0:
+                    if way == "вперёд":
                         yield from self.walk_north(steps)
-                    elif way == 1:
+                    elif way == "направо":
                         yield from self.walk_east(steps)
-                    elif way == 2:
+                    elif way == "назад":
                         yield from self.walk_south(steps)
-                    elif way == 3:
+                    elif way == "налево":
                         yield from self.walk_west(steps)
                 elif steps == 0:
                     yield self.get_message()
-            elif way not in range(4):
+            elif way not in ways:
                 yield self.get_warning(way)
         elif way is None or steps is None:
             yield self.get_message()
