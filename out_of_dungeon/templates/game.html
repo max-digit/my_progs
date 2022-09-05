@@ -26,18 +26,18 @@
                 {% endif %}
                 <p>{{ form.submit }}</p>
             </form>
-                {% for position in walk %}
-                    <div class="position">
-                        {{ position }}
-                    </div>
-                {% endfor %}
-                {% if castle.pos() == castle.finish %}
-                    <div class="position">
-                        <p>Барон: "{{ Player.name }}, мы рады Вас видеть! Хорошо, что Вы нашлись! <br>
-                            Присоединяйтесь: у нас тут утка, с яблоками :-)"
-                        </p>
-                    </div>
-                {% endif %}
+            {% for position in walk %}
+                <div class="position">
+                    {{ position }}
+                </div>
+            {% endfor %}
+            {% if castle.pos() == castle.finish %}
+                <div class="position">
+                    <p>Барон: "{{ Player.name }}, мы рады Вас видеть! Хорошо, что Вы нашлись! <br>
+                        Присоединяйтесь: у нас тут утка, с яблоками :-)"
+                    </p>
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
