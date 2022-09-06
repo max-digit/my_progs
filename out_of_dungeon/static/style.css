@@ -64,6 +64,11 @@ body {
     border-radius: 5px;
 }
 
+#steps {
+    width: 25%;
+    text-align: center;
+}
+
 #submit, #begin {
     background-color: #5DADE2;
     border: 2px outset saddlebrown;

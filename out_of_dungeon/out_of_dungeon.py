@@ -11,7 +11,7 @@ class GameForm(FlaskForm):
         "Если готовы, назовите Ваше имя: ",
         validators=[
             InputRequired(message='Введите своё имя'),
-            Length(max=33, message=f'Выберите имя покороче')]
+            Length(min=2, max=33, message=f'Выберите имя длиннее 3 и короче 33 символов')]
     )
 
     way = SelectField(
@@ -32,7 +32,7 @@ class GameForm(FlaskForm):
         "Сколько шагов вы хотите пройти?",
         validators = [
             InputRequired(message='Введите количество шагов'),
-            NumberRange(min=0, max=5, message="Вы не можете сюда двигаться")
+            NumberRange(min=1, message="Количество шагов должно быть больше нуля")
             ]
     )
 
@@ -183,4 +183,4 @@ class Castle(Player, metaclass=SingletonMeta):
         return f'Такой стороны света ({way}) не существует. Проверьте введенные данные'
 
     def get_congratulation(self):
-        return f'Отлично, {self.name}! Вы выбрались на {self.finish}! Свежий воздух бодрит, а барон Мюнхгаузен приветствует вас вкуснейшим завтраком!'
+        return f'Отлично! Вы выбрались на {self.finish}! Свежий воздух бодрит, а барон Мюнхгаузен приветствует Вас вкуснейшим завтраком!'
