@@ -11,7 +11,7 @@ class GameForm(FlaskForm):
         "Если готовы, назовите Ваше имя: ",
         validators=[
             InputRequired(message='Введите своё имя'),
-            Length(min=2, max=33, message=f'Выберите имя длиннее 3 и короче 33 символов')]
+            Length(min=2, max=33, message=f'Выберите имя длиной от 2 до 33 символов')]
     )
 
     way = SelectField(
