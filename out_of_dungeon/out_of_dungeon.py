@@ -33,7 +33,8 @@ class GameForm(FlaskForm):
         validators = [
             InputRequired(message='Введите количество шагов'),
             NumberRange(min=1, message="Количество шагов должно быть больше нуля")
-            ]
+            ],
+            default=1
     )
 
     submit = SubmitField(
