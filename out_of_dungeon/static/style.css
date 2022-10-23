@@ -29,8 +29,22 @@ body {
 
 .game_block {
     height: fit-content;
-    width: 30%;
+    width: 25%;
     border: 5px ridge;
+}
+
+.map {
+    display: flex;
+    justify-content: center;
+    z-index: -1;
+}
+
+.map img {
+    position: relative;
+    top: -5%;
+    width: 75%;
+    height: fit-content;
+    
 }
 
 .gameplay, .start {

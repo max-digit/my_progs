@@ -10,18 +10,11 @@
         <div class="start game_play game_block">
             <p>Готовы отправиться к приключениям?</p>
             <form method="post" action="">
-                <p>{{ form.name.label }} {{ form.name }}</p>
+                <p>{{ form.player_name.label }} {{ form.player_name }}</p>
                 <a href="{{ url_for('game', name=name) }}">
                     <input type="submit" value="Начать путешествие!" id="begin">
                 </a>
             </form>
         </div>
-    {% endblock %}
-    {% block footer %}
-        <footer>
-            <a href="https://wallpapercrafter.com/293579-castle-hohenzollern-sunrise-fortress-morgenstimmun.html">
-                Источник фото
-            </a>
-        </footer>
     {% endblock %}
 {% endblock %}

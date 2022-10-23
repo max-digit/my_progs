@@ -7,7 +7,7 @@ from wtforms.validators import InputRequired, Length, NumberRange
 
 class GameForm(FlaskForm):
     
-    name = StringField(
+    player_name = StringField(
         "Если готовы, назовите Ваше имя: ",
         validators=[
             InputRequired(message='Введите своё имя'),
@@ -26,6 +26,24 @@ class GameForm(FlaskForm):
         render_kw = {
             'class':'form_control',
         },
+    )
+
+    day = IntegerField(
+        "Введите число месяца: ",
+        validators=[
+            InputRequired(),
+            NumberRange(min=1, max=32)
+        ],
+        # default = 1
+    )
+
+
+    month = SelectField(
+        "Выберите месяц: ",
+        validators=[InputRequired()],
+        choices=(
+            "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь",
+        ),
     )
 
     steps = IntegerField(

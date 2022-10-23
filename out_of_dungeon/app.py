@@ -10,7 +10,7 @@ app.config.from_object(Config())
 @app.route('/', methods=['GET', 'POST'])
 def index():
     form = GameForm()
-    Player.name = form.name.data
+    Player.name = form.player_name.data
     Castle(floor=0, room=0)
     if request.method == 'POST':
         if form.validate_on_submit:

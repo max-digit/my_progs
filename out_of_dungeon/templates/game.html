@@ -14,7 +14,26 @@
             <p>
                 Вам нужно найти балкон!
             </p>
+            <p>Вы осматриваетесь и находите шкатулку, на которой написно: "План замка". Он бы сейчас Вам очень пригодился!</p>
+            <p>Но на сундуке висит кодовый замок с двумя цилиндрами. На одном из них - месяц, а на втором - число... <br>
+                Вы вспоминаете, что барон говорил Вам об одном лишнем дне, который он вычислил в этом году и решил поставить его в конец какого-то месяца.
+                Подберите число и месяц - и выбраться отсюда будет гораздо легче!</p>
+                <form action="" method="post">
+                    <p>{{ form.day }} {{ form.month }} <input id="submit" type="submit" value="Проверить"></p>
+                </form>
+                {% if form.day.data == 32 and form.month.data == "Май" %}
+                    <p>Ура! Вы нашли план замка!</p>
+                {% elif not form.day.data %}
+                    {{ pass }}
+                {% else %}
+                    <p>Попробуйте ещё!</p>
+                {% endif %}
         </div>
+        {% if form.day.data == 32 and form.month.data == "Май" %}
+            <div class="map">
+                <img src="{{ url_for('static', filename='images/castle_plan_cr.png') }}">
+            </div>
+        {% endif %}
         <div class="gameplay game_block">
             <form action="" method="post">
                 {% if form.field not in ('csrf_token', 'submit') %}
