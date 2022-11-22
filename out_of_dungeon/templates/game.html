@@ -4,7 +4,7 @@
     <div class="game">
         <div class="legend game_block">
             <p>
-                {{ Player.name }}, Вы вчера хорошо повеселились на балу в замке барона Мюнхгаузена!<br>
+                {{ castle.player_name }}, Вы вчера хорошо повеселились на балу в замке барона Мюнхгаузена!<br>
                 Вчерашний бал удался, но утром Вы проснулись... в продуктовом погребе!<br>
                 Снеди здесь не счесть, но Вам не до неё - здесь очень душно.
             </p>
@@ -46,15 +46,18 @@
                 {% endif %}
                 <p>{{ form.submit }}</p>
             </form>
-            {% for position in walk %}
-                <div class="position">
-                    {{ position }}
-                </div>
-            {% endfor %}
+            <div class="position">
+                {% if castle.pos() != castle.finish %}
+                    Вы в комнате {{ castle.pos() }}
+                {% else %}
+                    Ура! Вы выбрались на {{ castle.finish }}!
+                {% endif %}
+            </div>                
             {% if castle.pos() == castle.finish %}
                 <div class="position">
                     <p>Барон: "{{ Player.name }}, мы рады Вас видеть! Хорошо, что Вы нашлись! <br>
-                        Присоединяйтесь: у нас тут утка, с яблоками :-)"
+                        Присоединяйтесь: у нас тут утка. <br>
+                        С яблоками :-)"
                     </p>
                 </div>
             {% endif %}
