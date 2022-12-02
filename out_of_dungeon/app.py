@@ -1,7 +1,7 @@
 import secrets
 from flask import Flask, request, render_template, redirect, session, url_for
 
-from out_of_dungeon import GameForm, Player, Castle
+from out_of_dungeon import GameForm, Castle
 
 app = Flask(__name__)
 app.secret_key =  secrets.token_hex()
@@ -10,17 +10,16 @@ app.secret_key =  secrets.token_hex()
 def index():
     if 'username' in session:
         return f'Logged in as {session["username"]}'
-    # return 'You are not logged in'
     return redirect(url_for('login'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = GameForm()
     if request.method == 'POST':
-        Player.name = form.player_name.data
-        session['username'] = Player.name
+        user_name = form.player_name.data
+        session['username'] = user_name
         return redirect(
-            url_for('game', name=Player.name, way=None, steps=None)
+            url_for('game', name=user_name, way=None, steps=None)
             )
     return render_template(
         'index.html',
@@ -32,11 +31,11 @@ def login():
 def game(name, way=None, steps=None):
     if 'username' in session:
         form = GameForm()
-        Player.name = name
+        player_name = name
         if 'floor' and 'room' in session:
             floor = session['floor']
             room = session['room']
-            castle = Castle(floor, room)
+            castle = Castle(player_name, floor, room)
             if request.method == 'GET':
                 way = way
                 steps = steps
@@ -49,14 +48,11 @@ def game(name, way=None, steps=None):
         else:
             session['floor'] = 0
             session['room'] = 0
-            castle = Castle()
+            castle = Castle(player_name)
         return render_template(
             'game.html',
             form = form,
-            Player = Player,
             castle = castle,
-            way = way,
-            steps = steps,
             )
     else:
         return redirect(url_for('index'))

@@ -58,32 +58,10 @@ class GameForm(FlaskForm):
     )
 
 
-"""class SingletonMeta(type):
-    _instances = {}
-    _lock: Lock = Lock()
+class Castle():
 
-    def __call__(cls, *args, **kwargs):
-        with cls._lock:
-            if cls not in cls._instances or args or kwargs:
-                instance = super().__call__(*args, **kwargs)
-                cls._instances[cls] = instance
-        return cls._instances[cls]"""
-
-
-class Player:
-
-    @classmethod
-    def __init__(cls, name) -> None:
-        cls.name = name
-
-
-class Castle(Player):
-
-    def __init__(self, floor=0, room=0, ) -> None:
-        if hasattr(Player, 'name'):
-            self.player_name = getattr(Player, 'name')
-        else:
-            self.player_name = 'Сэр'
+    def __init__(self, name='Сэр', floor=0, room=0, ) -> None:
+        self.player_name = name
         self.map = self.castle_build()
         self.start = self.map[0][0]
         self.finish = self.map[2][1]
@@ -107,60 +85,44 @@ class Castle(Player):
                 if steps > 0:
                     for _step in range(1, steps + 1):
                         if way == "север":
-                            # yield from self.walk_north(steps)
                             if self.floor < self.edge:
                                 self.floor += 1
                                 if self.pos():
-                                    # yield from self.pos()
                                     continue
                                 else:
                                     self.floor -= 1
-                                    # yield from self.pos()
                                     break
                             else:
-                                # yield from self.pos()
                                 break
                         elif way == "восток":
-                            # yield from self.walk_east(steps)
                             if self.room < self.edge:
                                 self.room += 1
                                 if self.pos():
-                                    # yield from self.pos()
                                     continue
                                 else:
                                     self.room -= 1
-                                    # yield from self.pos()
                                     break
                             else:
-                                # yield from self.pos()
                                 break
                         elif way == "юг":
-                            # yield from self.walk_south(steps)
                             if self.floor > 0:
                                 self.floor -= 1
                                 if self.pos():
-                                    # yield from self.pos()
                                     continue
                                 else:
                                     self.floor += 1
-                                    # yield from self.pos()
                                     break
                             else:
-                                # yield from self.pos()
                                 break
                         elif way == "запад":
-                            # yield from self.walk_west(steps)
                             if self.room > 0:
                                 self.room -= 1
                                 if self.pos():
-                                    # yield from self.pos()
                                     continue
                                 else:
                                     self.room += 1
-                                    # yield from self.pos()
                                     break
                             else:
-                                # yield from self.pos()
                                 break
                     return self.pos()
                 elif steps == 0:
@@ -170,77 +132,7 @@ class Castle(Player):
         elif way is None or steps is None:
             return self.message()
 
-    def walk_north(self, steps):
-        for _step in range(1, steps + 1):
-            if self.floor < self.edge:
-                self.floor += 1
-                if self.pos():
-                    yield self.message()
-                else:
-                    self.floor -= 1
-                    yield self.notice()
-                    break
-            else:
-                yield self.notice()
-                break
-            if self.pos() == self.finish:
-                yield self.congratulation()
-                break
-
-    def walk_east(self, steps):
-        for _step in range(1, steps + 1):
-            if self.room < self.edge:
-                self.room += 1
-                if self.pos():
-                    yield self.message()
-                else:
-                    self.room -= 1
-                    yield self.notice()
-                    break
-            else:
-                yield self.notice()
-                break
-            if self.pos() == self.finish:
-                yield self.congratulation()
-                break
-
-    def walk_south(self, steps):
-        for _step in range(1, steps + 1):
-            if self.floor > 0:
-                self.floor -= 1
-                if self.pos():
-                    yield self.message()
-                else:
-                    self.floor += 1
-                    yield self.notice()
-                    break
-            else:
-                yield self.notice()
-                break
-            if self.pos() == self.finish:
-                yield self.congratulation()
-                break
-
-    def walk_west(self, steps):
-        for _step in range(1, steps + 1):
-            if self.room > 0:
-                self.room -= 1
-                if self.pos():
-                    yield self.message()
-                else:
-                    self.room += 1
-                    yield self.notice()
-                    break
-            else:
-                yield self.notice()
-                break
-            if self.pos() == self.finish:
-                yield self.congratulation()
-                break
-
-    def coord(self):
-        return {'floor':self.floor, 'room':self.room}
-
+    
     def pos(self):
         return self.map[self.floor][self.room]
 
