@@ -32,6 +32,9 @@ def game(name, way=None, steps=None):
     if 'username' in session:
         form = GameForm()
         player_name = name
+        if form.day.data == 32 and form.month.data == "Май":
+            session['castle_map_opened'] = True
+        print(session)
         if 'floor' and 'room' in session:
             floor = session['floor']
             room = session['room']
@@ -59,8 +62,7 @@ def game(name, way=None, steps=None):
 
 @app.route('/logout')
 def logout():
-    # remove the username from the session if it's there
-    session.pop('username', None)
+    session.clear()
     return redirect(url_for('index'))
 
 

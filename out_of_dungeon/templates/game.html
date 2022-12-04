@@ -21,17 +21,17 @@
                 <form action="" method="post">
                     <p>{{ form.day }} {{ form.month }} <input id="submit" type="submit" value="Проверить"></p>
                 </form>
-                {% if form.day.data == 32 and form.month.data == "Май" %}
+                {% if session['castle_map_opened'] %}
                     <p>Ура! Вы нашли план замка!</p>
-                {% elif not form.day.data %}
+                {% elif not form.day.data or not form.month.data %}
                     {{ pass }}
                 {% else %}
-                    <p>Попробуйте ещё!</p>
+                    <p>Попробуйте ещё!</p>                
                 {% endif %}
         </div>
-        {% if form.day.data == 32 and form.month.data == "Май" %}
+        {% if session['castle_map_opened'] %}
             <div class="map">
-                <img src="{{ url_for('static', filename='images/castle_plan_cr.png') }}">
+                <img src="{{ url_for('static', filename='images/castle_map.png') }}">
             </div>
         {% endif %}
         <div class="gameplay game_block">

@@ -4,7 +4,9 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" type="image/png" href="{{url_for('static', filename='images/favicon2.jpg')}}" >
+        <link href="{{ url_for('static', filename='bootstrap.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css">
+        <link rel="icon" type="image/png" href="{{url_for('static', filename='images/favicon.jpg')}}" >
         <title>Подземелье. Путь наверх</title>
     </head>
     <body>
@@ -26,6 +28,4 @@
 
 
 {% block scripts %}
-    <link href="{{ url_for('static', filename='bootstrap.css') }}" rel="stylesheet" type="text/css">
-    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css">
 {% endblock %}

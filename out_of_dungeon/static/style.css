@@ -36,13 +36,14 @@ body {
 .map {
     display: flex;
     justify-content: center;
-    z-index: -1;
+    width: 50%;
 }
 
 .map img {
     position: relative;
-    top: -4%;
-    width: 75%;
+    top: -2%;
+    left: 3%;
+    width: 100%;
     height: fit-content;
     
 }
