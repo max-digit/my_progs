@@ -121,3 +121,8 @@ footer {
 footer a {
     text-decoration: none;
 }
+
+footer .contacts {
+    display: flex;
+    flex-direction: row;
+}
